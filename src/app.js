@@ -1,7 +1,8 @@
 // Entry point for the api
-require('dotenv').config()
-const express = require('express')
-const router = require('./routes/thirtyDayRoutes')
+import dotenv from 'dotenv'
+import express from 'express'
+import { router } from './routes/thirtyDayRoutes'
+dotenv.config() 
 
 const app = express() 
 const PORT = process.env.PORT || 3000

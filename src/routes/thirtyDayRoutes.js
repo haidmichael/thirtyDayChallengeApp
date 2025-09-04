@@ -1,6 +1,7 @@
-require('dotenv').config()
-const express = require('express')
-const router = express.Router()
+import dotenv from 'dotenv'
+import express from 'express'
+export const router = express.Router()
+dotenv.config() 
 
 // ########## Home Route ###########
 router.get('/', (req, res) => {
@@ -14,5 +15,3 @@ router.get('/health', async(req, res) => {
         status: '200'
     })
 })
-
-module.exports = router

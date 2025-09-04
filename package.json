@@ -1,5 +1,6 @@
 {
   "name": "thirtydaychallengeapp",
+  "type": "module",
   "version": "1.0.0",
   "description": "Workout App to keep track of rep count",
   "main": "src/app.js",
