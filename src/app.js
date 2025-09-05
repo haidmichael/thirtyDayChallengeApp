@@ -1,14 +1,14 @@
 // Entry point for the api
 import dotenv from 'dotenv'
-import express from 'express'
-import { router } from './routes/thirtyDayRoutes'
 dotenv.config() 
+import express from 'express'
+import { router } from './routes/thirtyDayRoutes.js'
 
 const app = express() 
 const PORT = process.env.PORT || 3000
 
 // ########## all routes ##########
-app.use('/', router)
+app.use('', router)
 
 // ########## Server Start ##########
 app.listen(PORT, () =>{
