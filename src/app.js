@@ -8,7 +8,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 // ########## all routes ##########
-app.use('', router)
+app.use('/', router)
 
 // ########## Server Start ##########
 app.listen(PORT, () =>{
