@@ -1,5 +1,4 @@
-// import user from '../database/user.js'
-import getAllUser from "../database/user"
+import {getAllUser} from '../database/user.js'
 
 export const allUsers = async (req, res) => {
     try {
@@ -12,5 +11,4 @@ export const allUsers = async (req, res) => {
         res.status(500).json({ message: 'Server error...'})
     }
 }
-
 // export default allUsers

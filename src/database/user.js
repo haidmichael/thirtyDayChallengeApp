@@ -1,5 +1,5 @@
 // import db from './db.js'
-import pool from "./db"
+import { pool }from "./db.js"
 
 export const getAllUser = async () =>{
     try {

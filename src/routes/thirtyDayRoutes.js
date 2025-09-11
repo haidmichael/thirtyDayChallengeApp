@@ -3,7 +3,7 @@ dotenv.config()
 
 import express from 'express'
 // import { userController } from '../controllers/userController.js'
-import allUsers from '../controllers/userController.js' 
+import { allUsers} from '../controllers/userController.js' 
 export const router = express.Router()
 
 // ########## Home Route ###########
