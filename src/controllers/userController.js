@@ -1,4 +1,4 @@
-import {getAllUser} from '../database/user.js'
+import { getAllUser } from '../database/user.js'
 
 export const allUsers = async (req, res) => {
     try {

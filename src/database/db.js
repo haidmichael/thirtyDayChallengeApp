@@ -1,13 +1,20 @@
 import dotenv from 'dotenv'
+// dotenv.config() 
+// import { Pool } from 'pg'
+import pkq from 'pg' 
+const { Pool } = pkq
 dotenv.config() 
-import { Pool } from 'pg'
 
 export const pool = new Pool({
-  user: 'USER',
+  // user: process.env.DB_USER,
+  host: process.env.DB_HOST,
   password: process.env.DB_PASSWORD,
-  host: 'localhost',
   port: process.env.DB_PORT, 
   database: process.env.DB_NAME
 })
-console.log('DB is running')
+
+pool.on('connect', () => {
+  console.log('Connection pool establised with Database')
+})
+// console.log('DB is running')
 // export default pool
