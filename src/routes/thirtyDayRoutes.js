@@ -3,13 +3,16 @@ dotenv.config()
 
 import express from 'express'
 // import { userController } from '../controllers/userController.js'
-import { allUsers } from '../controllers/userController.js' 
+import { allUsers, registerUser } from '../controllers/userController.js' 
 export const router = express.Router()
 
 // ########## Home Route ###########
 
 // ##### Debug route for getting all users ######
 router.get('/getAllUsers', allUsers) 
+
+// ########## Create User Route ###########
+router.post('/register', registerUser)
 
 // ########## Health Route ##########
 router.get('/health', async(req, res) => {

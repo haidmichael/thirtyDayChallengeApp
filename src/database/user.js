@@ -21,4 +21,23 @@ export const getAllUser = async () => {
     }
 }
 
+export const createUser = async () => {
+    let client 
+    try {
+        // const { rows: [user] } = await client.query(
+        console.log(object)
+        const result = await client.query(
+			`
+                INSERT INTO users (email, password, first_name, last_name) 
+                VALUES($1, $2, $3, $4) 
+                RETURNING email, password, firstname, lastname
+              `,
+			[ email, password, first_name, last_name ]
+        ) 
+        // return user
+        res.json(result.rows[0]) 
+    } catch (error) {
+        throw error 
+    }
+}
 // export default getAllUser
