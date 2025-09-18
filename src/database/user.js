@@ -1,12 +1,11 @@
 // import db from './db.js'
 import { pool } from "./db.js"
 
+// ##### Get Request to select all users #####
 export const getAllUser = async () => {
-    let client 
+    let client = await pool.connect() 
     try {
-        client = await pool.connect() 
-
-        const query = 'SELECT * FROM user'
+        const query = 'SELECT * FROM "user"'
         const result = await client.query(query) 
         // return result.json(result.rows) 
         return result.rows
@@ -21,23 +20,24 @@ export const getAllUser = async () => {
     }
 }
 
-export const createUser = async () => {
-    let client 
+// ##### Post Request to create user #####
+export const createUser = async ({email, password, first_name, last_name}) => {
+    let client = await pool.connect()  
     try {
         // const { rows: [user] } = await client.query(
-        console.log(object)
+        // console.log(object)
         const result = await client.query(
 			`
-                INSERT INTO users (email, password, first_name, last_name) 
+                INSERT INTO "user" (email, password, first_name, last_name) 
                 VALUES($1, $2, $3, $4) 
-                RETURNING email, password, firstname, lastname
+                RETURNING email, password, first_name, last_name
               `,
 			[ email, password, first_name, last_name ]
         ) 
         // return user
-        res.json(result.rows[0]) 
+        // res.json(result.rows[0]) 
+        return result.rows[0]
     } catch (error) {
         throw error 
     }
 }
-// export default getAllUser

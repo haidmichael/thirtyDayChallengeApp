@@ -2,8 +2,7 @@ import { getAllUser, createUser } from '../database/user.js'
 
 export const allUsers = async (req, res) => {
     try {
-        console.log('hello controller')
-	    // const users = await user.getAllUsers()
+        // console.log('hello controller')
         const users = await getAllUser() 
         res.status(200).json(users)
     } catch (error) {
@@ -14,14 +13,14 @@ export const allUsers = async (req, res) => {
 
 export const registerUser = async (req, res, next) => {
     const { email, password,  first_name, last_name } = req.body
-    console.log('Are we in register..?')
+    // console.log('Are we in register..?')
     try {
         if (password.length < 8) {
             return 
         }
-        const user = await createUser ({email, password, first_name, last_name})
-        console.log('are you here....?')
-        res.sent({
+        const user = await createUser({email, password, first_name, last_name})
+        // console.log('are you here....?')
+        res.send({
             message: 'Thank you for signing up!',
             user: user 
         })        
