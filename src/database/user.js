@@ -7,6 +7,7 @@ export const getAllUser = async () => {
     try {
         const query = 'SELECT * FROM "user"'
         const result = await client.query(query) 
+        // console.log(result.rows)
         // return result.json(result.rows) 
         return result.rows
         // const { rows: user } = await pool.query(`SELECT * from user`)
@@ -40,4 +41,43 @@ export const createUser = async ({email, password, first_name, last_name}) => {
     } catch (error) {
         throw error 
     }
+}
+
+export const getUser = async ({ email, password }) => {
+    let client = await pool.connect() 
+    try {
+        const userEmail = await getUserbyEmail(email)
+        console.log('userEmail', userEmail)
+        if (!userEmail) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+        const hashedPassword = userEmail.password
+        const varifyPassword = await bcrypt.compare(password, hashedPassword)
+
+        if (varifyPassword) {
+            delete userEmail.password
+            return user 
+        } else {
+            return 'Invalid Email'
+        }
+
+    } catch (error) {
+        throw error 
+    }
+}
+
+const getUserbyEmail = async (email) => {
+    let client = await pool.connect() 
+    try {
+        const userEmail = await client.query(
+            `
+            SELECT * FROM "user"
+            WHERE email = $1
+            ` 
+            [ email ]
+        )
+        console.log('emailUser', userEmail)
+        return userEmail 
+    } catch (error) {
+    } 
 }

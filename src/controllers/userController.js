@@ -1,4 +1,4 @@
-import { getAllUser, createUser } from '../database/user.js'
+import { getAllUser, createUser, getUser } from '../database/user.js'
 
 export const allUsers = async (req, res) => {
     try {
@@ -26,6 +26,28 @@ export const registerUser = async (req, res, next) => {
         })        
     } catch (error) {
         next( error )
+    }
+}
+
+export const loginUser = async (req, res, next) => {
+    // login user
+    console.log('In login User')
+    const { email, password } = req.body
+    try {
+        const user = await getUser({ email, password })
+        if(!user){
+            res.send({
+                message: 'error'
+            })
+        }
+        res.send({
+            message: 'Thanks for signing back in', 
+            user: email 
+        })
+        
+    } catch (error) {
+        console.error(error) 
+        next({ name: 'error', message: 'Unable to log in user...!'})
     }
 }
 

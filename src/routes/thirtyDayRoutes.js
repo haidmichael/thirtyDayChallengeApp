@@ -3,7 +3,7 @@ dotenv.config()
 
 import express from 'express'
 // import { userController } from '../controllers/userController.js'
-import { allUsers, registerUser } from '../controllers/userController.js' 
+import { allUsers, registerUser, loginUser } from '../controllers/userController.js' 
 export const router = express.Router()
 
 // ########## Home Route ###########
@@ -14,6 +14,8 @@ router.get('/getAllUsers', allUsers)
 // ########## Create User Route ###########
 router.post('/register', registerUser)
 
+router.post('/login', loginUser)
+
 // ########## Health Route ##########
 router.get('/health', async(req, res) => {
     return res.status(200).json({
@@ -21,4 +23,6 @@ router.get('/health', async(req, res) => {
         status: '200'
     })
 })
+
+router.post('/login', registerUser)
 // module.export = router
