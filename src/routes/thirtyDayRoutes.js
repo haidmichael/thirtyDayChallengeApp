@@ -16,8 +16,6 @@ router.post('/register', registerUser)
 
 router.post('/login', loginUser)
 
-// router.post('/login', registerUser)
-
 // ########## Health Route ##########
 router.get('/health', async(req, res) => {
     return res.status(200).json({

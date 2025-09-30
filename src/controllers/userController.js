@@ -13,6 +13,7 @@ export const allUsers = async (req, res) => {
 
 export const registerUser = async (req, res, next) => {
     const { email, password,  first_name, last_name } = req.body
+    console.log(email, first_name, last_name)
     // console.log('Are we in register..?')
     try {
         if (password.length < 8) {
@@ -30,24 +31,20 @@ export const registerUser = async (req, res, next) => {
 }
 
 export const loginUser = async (req, res, next) => {
-    // const { email, password } = req.body
-    const {email} = req.body
-    console.log('In login User')
+    const { email, password } = req.body
     try {
 
-        // if (!email || !password) {
-        if (!email) {
+        if(!email || !password) {
             return res.status(400).json({ message: 'Email and password are required' })
         }
 
-        // const user = await getUser({ email, password })
-        const user = await getUser({ email }) 
+        const user = await getUser({ email, password })
 
         if(!user){
             return res.status(401).json({ message: 'Invalid credentials' })
         }
         
-        return res.status(200).json({ message: 'Thanks for signing back in', user: user })
+        return res.status(200).json({ message: `Thanks for signing back`, user: email })
         
     } catch (error) {
         console.error(error) 

@@ -1,5 +1,6 @@
 // import db from './db.js'
 import { pool } from "./db.js"
+// import bcrypt from 'bcrypt'
 
 // ##### Get Request to select all users #####
 export const getAllUser = async () => {
@@ -51,32 +52,28 @@ export const getUser = async ({ email, password }) => {
 
         const userEmail = await client.query(
             `
-            SELECT email FROM "user"
+            SELECT * FROM "user"
             WHERE email = $1
             `, 
             [ email ]
         )
-        console.log('emailUser', userEmail)
-        // return userEmail.rows  
 
+        if (!userEmail.rows || userEmail.rows.length === 0) {
+            return '' 
+            // return res.status(401).json({ message: 'Invalid credentials' })
+        }
 
-        // if (!userEmail.rows || userEmail.rows.length === 0) {
-        //     return '' 
-        //     // return res.status(401).json({ message: 'Invalid credentials' })
-        // }
-
-        // const user = userEmail.rows[0]
-        // const hashedPassword = user.password
+        const user = userEmail.rows[0]
+        const hashedPassword = user.password
         // const varifyPassword = await bcrypt.compare(password, hashedPassword)
 
         // if (varifyPassword) {
-            
-        //     // delete userEmail.password
-        //     return userEmail 
-        // } else {
-        //     return 'Invalid Email'
-        // }
+        if (hashedPassword) {
+            delete userEmail.password
             return userEmail 
+        } else {
+            return 'Invalid Email'
+        }
 
     } catch (error) {
         throw error 
