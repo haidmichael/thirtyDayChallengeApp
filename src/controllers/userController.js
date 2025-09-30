@@ -30,20 +30,24 @@ export const registerUser = async (req, res, next) => {
 }
 
 export const loginUser = async (req, res, next) => {
-    // login user
+    // const { email, password } = req.body
+    const {email} = req.body
     console.log('In login User')
-    const { email, password } = req.body
     try {
-        const user = await getUser({ email, password })
-        if(!user){
-            res.send({
-                message: 'error'
-            })
+
+        // if (!email || !password) {
+        if (!email) {
+            return res.status(400).json({ message: 'Email and password are required' })
         }
-        res.send({
-            message: 'Thanks for signing back in', 
-            user: email 
-        })
+
+        // const user = await getUser({ email, password })
+        const user = await getUser({ email }) 
+
+        if(!user){
+            return res.status(401).json({ message: 'Invalid credentials' })
+        }
+        
+        return res.status(200).json({ message: 'Thanks for signing back in', user: user })
         
     } catch (error) {
         console.error(error) 

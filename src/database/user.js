@@ -46,23 +46,42 @@ export const createUser = async ({email, password, first_name, last_name}) => {
 export const getUser = async ({ email, password }) => {
     let client = await pool.connect() 
     try {
-        const userEmail = await getUserbyEmail(email)
-        console.log('userEmail', userEmail)
-        if (!userEmail) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-        const hashedPassword = userEmail.password
-        const varifyPassword = await bcrypt.compare(password, hashedPassword)
+        // const userEmail = await getUserbyEmail(email)
+        // console.log('userEmail', userEmail)
 
-        if (varifyPassword) {
-            delete userEmail.password
-            return user 
-        } else {
-            return 'Invalid Email'
-        }
+        const userEmail = await client.query(
+            `
+            SELECT email FROM "user"
+            WHERE email = $1
+            `, 
+            [ email ]
+        )
+        console.log('emailUser', userEmail)
+        // return userEmail.rows  
+
+
+        // if (!userEmail.rows || userEmail.rows.length === 0) {
+        //     return '' 
+        //     // return res.status(401).json({ message: 'Invalid credentials' })
+        // }
+
+        // const user = userEmail.rows[0]
+        // const hashedPassword = user.password
+        // const varifyPassword = await bcrypt.compare(password, hashedPassword)
+
+        // if (varifyPassword) {
+            
+        //     // delete userEmail.password
+        //     return userEmail 
+        // } else {
+        //     return 'Invalid Email'
+        // }
+            return userEmail 
 
     } catch (error) {
         throw error 
+    } finally {
+        client.release
     }
 }
 
@@ -73,11 +92,11 @@ const getUserbyEmail = async (email) => {
             `
             SELECT * FROM "user"
             WHERE email = $1
-            ` 
+            `, 
             [ email ]
         )
         console.log('emailUser', userEmail)
-        return userEmail 
+        return userEmail.rows  
     } catch (error) {
     } 
 }
